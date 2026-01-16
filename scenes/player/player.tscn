@@ -1,0 +1,175 @@
+[gd_scene load_steps=21 format=3 uid="uid://jwnqryp1hulx"]
+
+[ext_resource type="Texture2D" uid="uid://lqals8v555pu" path="res://assets/player_sheet.png" id="1_8afob"]
+[ext_resource type="Script" uid="uid://do6lc7g7eoho7" path="res://scenes/player/player.gd" id="1_dovo2"]
+[ext_resource type="Script" uid="uid://bdeyld5uocapg" path="res://scenes/player/fsm/states/idle.gd" id="3_gmlin"]
+[ext_resource type="Script" uid="uid://q5cyop71part" path="res://scenes/player/fsm/states/run.gd" id="4_lvxji"]
+[ext_resource type="Script" uid="uid://b3h0tj2g3uy0r" path="res://scenes/player/fsm/states/jump.gd" id="5_p47bc"]
+[ext_resource type="Script" uid="uid://bov2ffi5rrrt1" path="res://scenes/player/fsm/states/hurt.gd" id="6_75vfm"]
+[ext_resource type="Script" uid="uid://c687nfsf15vlb" path="res://scenes/player/fsm/states/dead.gd" id="7_0owmy"]
+
+[sub_resource type="Animation" id="Animation_8afob"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [7, 10]
+}
+
+[sub_resource type="Animation" id="Animation_dovo2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [10]
+}
+
+[sub_resource type="Animation" id="Animation_gmlin"]
+resource_name = "run"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [13, 18]
+}
+
+[sub_resource type="Animation" id="Animation_lvxji"]
+resource_name = "hurt"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_p47bc"]
+resource_name = "jump_up"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [11]
+}
+
+[sub_resource type="Animation" id="Animation_75vfm"]
+resource_name = "jump_down"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [12]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dovo2"]
+_data = {
+&"RESET": SubResource("Animation_dovo2"),
+&"hurt": SubResource("Animation_lvxji"),
+&"idle": SubResource("Animation_8afob"),
+&"jump_down": SubResource("Animation_75vfm"),
+&"jump_up": SubResource("Animation_p47bc"),
+&"run": SubResource("Animation_gmlin")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8afob"]
+size = Vector2(10, 22)
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_dovo2"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_gmlin"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_lvxji"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_p47bc"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_75vfm"]
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 13
+script = ExtResource("1_dovo2")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+texture = ExtResource("1_8afob")
+hframes = 19
+frame = 10
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_dovo2")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -11)
+shape = SubResource("RectangleShape2D_8afob")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2.5, 2.5)
+
+[node name="LimboHSM" type="LimboHSM" parent="."]
+
+[node name="idle" type="LimboState" parent="LimboHSM"]
+blackboard_plan = SubResource("BlackboardPlan_dovo2")
+script = ExtResource("3_gmlin")
+
+[node name="run" type="LimboState" parent="LimboHSM"]
+blackboard_plan = SubResource("BlackboardPlan_gmlin")
+script = ExtResource("4_lvxji")
+
+[node name="jump" type="LimboState" parent="LimboHSM"]
+blackboard_plan = SubResource("BlackboardPlan_lvxji")
+script = ExtResource("5_p47bc")
+
+[node name="hurt" type="LimboState" parent="LimboHSM"]
+blackboard_plan = SubResource("BlackboardPlan_p47bc")
+script = ExtResource("6_75vfm")
+
+[node name="dead" type="LimboState" parent="LimboHSM"]
+blackboard_plan = SubResource("BlackboardPlan_75vfm")
+script = ExtResource("7_0owmy")
