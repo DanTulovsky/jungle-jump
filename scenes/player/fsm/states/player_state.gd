@@ -25,8 +25,15 @@ func check_if_in_air() -> void:
     if !player.is_on_floor():
         dispatch(&"to_jump")
 
-func check_hurt() -> void:
+func check_collisions() -> void:
     for i in player.get_slide_collision_count():
         var collision: KinematicCollision2D = player.get_slide_collision(i)
         if collision.get_collider().is_in_group("danger"):
             player.hurt()
+
+        if collision.get_collider().is_in_group("enemies"):
+            if player.position.y < collision.get_collider().position.y:
+                collision.get_collider().take_damage()
+                player.velocity.y = -200
+            else:
+                player.hurt()

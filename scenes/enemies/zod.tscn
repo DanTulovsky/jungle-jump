@@ -1,0 +1,119 @@
+[gd_scene load_steps=9 format=3 uid="uid://b0kn6vyby840r"]
+
+[ext_resource type="Texture2D" uid="uid://dyilghn7yb6np" path="res://assets/general_zod/master_sheet.png" id="1_8te7f"]
+[ext_resource type="Script" uid="uid://m1q1alc6ealt" path="res://scenes/enemies/zod.gd" id="1_jfkyh"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_21a5l"]
+radius = 3.0
+height = 32.0
+
+[sub_resource type="Animation" id="Animation_21a5l"]
+resource_name = "idle"
+length = 0.80002004
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 3]
+}
+
+[sub_resource type="Animation" id="Animation_timr1"]
+resource_name = "run"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [4, 9]
+}
+
+[sub_resource type="Animation" id="Animation_qqanx"]
+resource_name = "walk"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [25, 30]
+}
+
+[sub_resource type="Animation" id="Animation_jfkyh"]
+resource_name = "death"
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [41, 42]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 6), Vector2(0, 7)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qqanx"]
+_data = {
+&"death": SubResource("Animation_jfkyh"),
+&"idle": SubResource("Animation_21a5l"),
+&"run": SubResource("Animation_timr1"),
+&"walk": SubResource("Animation_qqanx")
+}
+
+[node name="Zod" type="CharacterBody2D" groups=["enemies"]]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_jfkyh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+texture = ExtResource("1_8te7f")
+hframes = 46
+frame = 25
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -16)
+shape = SubResource("CapsuleShape2D_21a5l")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_qqanx")
+}
+autoplay = "idle"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -9,5 +9,5 @@ func _update(_delta):
 		player.anim_player.play(player.ANIM_JUMP_DOWN)
 
 	check_direction_input()
-	check_hurt()
+	check_collisions()
 
