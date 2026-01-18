@@ -1,5 +1,9 @@
 class_name Player extends CharacterBody2D
 
+signal life_changed
+@warning_ignore("unused_signal") # used in dead.gd
+signal died
+
 const ANIM_IDLE := &"idle"
 const ANIM_RUN := &"run"
 const ANIM_JUMP_UP := &"jump_up"
@@ -21,6 +25,13 @@ const ANIM_DEAD := &"dead"
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
+
+var life: int = 3:
+	set(value):
+		life = value
+		life_changed.emit(life)
+		if life <= 0:
+			hsm.dispatch("to_dead")
 
 func _ready() -> void:
 	_init_state_machine()
@@ -52,5 +63,10 @@ func apply_gravity(delta: float) -> void:
 
 func reset(_position: Vector2) -> void:
 	position = _position
+	life = 3
 	show()
 	hsm.dispatch("to_idle")
+
+func hurt():
+	if !hurt_state.is_active():
+		hsm.dispatch("to_hurt")

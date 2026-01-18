@@ -7,3 +7,4 @@ func _update(_delta: float) -> void:
 	check_direction_input()
 	check_jump_input()
 	check_if_in_air()
+	check_hurt()

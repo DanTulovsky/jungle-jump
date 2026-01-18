@@ -8,23 +8,6 @@
 [ext_resource type="Script" uid="uid://bov2ffi5rrrt1" path="res://scenes/player/fsm/states/hurt.gd" id="6_75vfm"]
 [ext_resource type="Script" uid="uid://c687nfsf15vlb" path="res://scenes/player/fsm/states/dead.gd" id="7_0owmy"]
 
-[sub_resource type="Animation" id="Animation_8afob"]
-resource_name = "idle"
-length = 0.4
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [7, 10]
-}
-
 [sub_resource type="Animation" id="Animation_dovo2"]
 length = 0.001
 tracks/0/type = "value"
@@ -38,23 +21,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [10]
-}
-
-[sub_resource type="Animation" id="Animation_gmlin"]
-resource_name = "run"
-length = 0.5
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [13, 18]
 }
 
 [sub_resource type="Animation" id="Animation_lvxji"]
@@ -74,9 +40,10 @@ tracks/0/keys = {
 "values": [5, 6]
 }
 
-[sub_resource type="Animation" id="Animation_p47bc"]
-resource_name = "jump_up"
-length = 0.1
+[sub_resource type="Animation" id="Animation_8afob"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -84,10 +51,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [11]
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [7, 10]
 }
 
 [sub_resource type="Animation" id="Animation_75vfm"]
@@ -104,6 +71,39 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [12]
+}
+
+[sub_resource type="Animation" id="Animation_p47bc"]
+resource_name = "jump_up"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [11]
+}
+
+[sub_resource type="Animation" id="Animation_gmlin"]
+resource_name = "run"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [13, 18]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dovo2"]
